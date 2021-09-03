@@ -2,14 +2,14 @@
 # Contributor: Sven-Hendrik Haase <svenstaro@gmail.com>
 # Contributor: hexchain <i@hexchain.org>
 pkgname=telegram-desktop9
-pkgver=2.9.3
+pkgver=3.0.1
 pkgrel=1
 pkgdesc='Official Telegram Desktop client (personal build)'
 arch=('x86_64')
 url="https://desktop.telegram.org/"
 license=('GPL3')
 depends=('ffmpeg' 'hicolor-icon-theme' 'lz4' 'minizip' 'openal' 'ttf-opensans'
-         'qt5-imageformats' 'xxhash' 'libdbusmenu-qt5' 'kwayland' 'glibmm'
+         'qt5-imageformats' 'qt5-svg' 'xxhash' 'libdbusmenu-qt5' 'kwayland' 'glibmm'
          'rnnoise' 'pipewire' 'libxtst' 'libxrandr' 'jemalloc' 'libtg_owt')
 makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-gsl'
              'extra-cmake-modules' 'gtk3' 'webkit2gtk')
@@ -29,7 +29,7 @@ source=("https://github.com/telegramdesktop/tdesktop/releases/download/v${pkgver
         "use_xdg-open.patch"
         "fix_thread_context_menu.patch"
         "mediaviewer_nofullscreen.patch")
-sha512sums=('810cfac5d7e6ce9413b1b2406927e89c1383ea5b725233a68b2cb29dd374b4c3386c22186640afde4492c844516c88889a5db8e5b167a09d6d6c1270ac965ac4'
+sha512sums=('6bff6be5f2c0c7a17df61dccc5a3216dcbb95a1c6d3176442c530e2c1b525e6d15079b230d40751f20684da2a1067d4518a9a1ab90d49d1a7338d3e05239d447'
             'fdef3a430bdd60d88c9e9011ee878805e7803699204a2a7e22797d0f8729bf7dc0543851083ad700a4ece32bc768b6bfeb6f0135c8c039e035b22afb6df1171d'
             'dc5ffda130496c44bfe52792e856dac811b1a8e48b463529dd54396ad1b45915f8b6d9fcb6cb254f9350b3440d7b94a67d1c19660962f0350015061b021af6f1'
             '4da055da633b40b6133d14fd13d1aa9d933b3ba4b19370bc0edbccc02d4e31a9291191f7dc3a2aca9225da8dabca6ed33f90ab757435bebd034b6fed28ac8092'
