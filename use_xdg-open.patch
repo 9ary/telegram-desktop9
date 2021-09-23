@@ -2,18 +2,18 @@ Description: use xdg-open to open things in external applications
 Credits: novie
 
 diff --git a/Telegram/SourceFiles/platform/linux/file_utilities_linux.cpp b/Telegram/SourceFiles/platform/linux/file_utilities_linux.cpp
-index 0489ece0d..71d8836b9 100644
+index 0437363c3..d787cfcf9 100644
 --- a/Telegram/SourceFiles/platform/linux/file_utilities_linux.cpp
 +++ b/Telegram/SourceFiles/platform/linux/file_utilities_linux.cpp
-@@ -27,6 +27,7 @@ namespace Platform {
+@@ -24,6 +24,7 @@ namespace Platform {
  namespace File {
  
  void UnsafeOpenUrl(const QString &url) {
 +#if 0
+ #ifndef DESKTOP_APP_DISABLE_DBUS_INTEGRATION
  	try {
  		if (Gio::AppInfo::launch_default_for_uri(url.toStdString())) {
- 			return;
-@@ -38,6 +39,7 @@ void UnsafeOpenUrl(const QString &url) {
+@@ -37,6 +38,7 @@ void UnsafeOpenUrl(const QString &url) {
  	if (QDesktopServices::openUrl(url)) {
  		return;
  	}
@@ -21,19 +21,26 @@ index 0489ece0d..71d8836b9 100644
  
  	QProcess::startDetached(qsl("xdg-open"), { url });
  }
-@@ -65,6 +67,7 @@ bool UnsafeShowOpenWith(const QString &filepath) {
+@@ -56,6 +58,7 @@ bool UnsafeShowOpenWith(const QString &filepath) {
  }
  
  void UnsafeLaunch(const QString &filepath) {
 +#if 0
+ #ifndef DESKTOP_APP_DISABLE_DBUS_INTEGRATION
  	try {
  		if (Gio::AppInfo::launch_default_for_uri(
- 			Glib::filename_to_uri(filepath.toStdString()))) {
-@@ -77,6 +80,7 @@ void UnsafeLaunch(const QString &filepath) {
- 	if (UnsafeShowOpenWith(filepath)) {
+@@ -70,11 +73,14 @@ void UnsafeLaunch(const QString &filepath) {
+ 		return;
+ 	}
+ #endif // !DESKTOP_APP_DISABLE_DBUS_INTEGRATION
++#endif
+ 
+ 	const auto qUrlPath = QUrl::fromLocalFile(filepath);
++#if 0
+ 	if (QDesktopServices::openUrl(qUrlPath)) {
  		return;
  	}
 +#endif
  
- 	const auto qUrlPath = QUrl::fromLocalFile(filepath);
- 	if (QDesktopServices::openUrl(qUrlPath)) {
+ 	QProcess::startDetached(qsl("xdg-open"), { qUrlPath.toEncoded() });
+ }
