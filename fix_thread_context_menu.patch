@@ -1,21 +1,21 @@
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 495376acc..04a2470db 100644
+index 0d1cf828a..962f4dce6 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -1541,7 +1541,7 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+@@ -1634,7 +1634,7 @@ void HistoryInner::showContextMenu(QContextMenuEvent *e, bool showFromTouch) {
+ 			});
  		}
  		const auto repliesCount = item->repliesCount();
- 		const auto withReplies = IsServerMsgId(item->id)
--			&& (repliesCount > 0);
-+			&& (repliesCount > 0 || IsServerMsgId(item->replyToTop()));
+-		const auto withReplies = (repliesCount > 0);
++		const auto withReplies = (repliesCount > 0) || IsServerMsgId(item->replyToTop());
  		if (withReplies && item->history()->peer->isMegagroup()) {
  			const auto rootId = repliesCount ? item->id : item->replyToTop();
  			const auto phrase = (repliesCount > 0)
 diff --git a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-index 73ca05504..50c8c896c 100644
+index daadcbe0b..a19a96ef1 100644
 --- a/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
 +++ b/Telegram/SourceFiles/history/view/history_view_context_menu.cpp
-@@ -570,7 +570,7 @@ bool AddViewRepliesAction(
+@@ -569,7 +569,7 @@ bool AddViewRepliesAction(
  		return false;
  	}
  	const auto repliesCount = item->repliesCount();
