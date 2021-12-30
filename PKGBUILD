@@ -2,7 +2,7 @@
 # Contributor: Sven-Hendrik Haase <svenstaro@gmail.com>
 # Contributor: hexchain <i@hexchain.org>
 pkgname=telegram-desktop9
-pkgver=3.3.0
+pkgver=3.4.0
 pkgrel=1
 pkgdesc='Official Telegram Desktop client (personal build)'
 arch=('x86_64')
@@ -29,7 +29,7 @@ source=("https://github.com/telegramdesktop/tdesktop/releases/download/v${pkgver
         "use_xdg-open.patch"
         "fix_thread_context_menu.patch"
         "mediaviewer_nofullscreen.patch")
-sha512sums=('ff0ac1abe264f19812c2e0b40d4861caddd6c01a3f863ccb68de9c5227282872b2bde878dcf751d7d04d36c6e0e77912619ac7863d54f25f739f3744e9bca53a'
+sha512sums=('3ad3beb8a63bae98eb85127fdc1cce55baba0f9b0475904e54d4dc3a7679fbbb93e737b98c22c0737ed16204abff0eedd770be0f522de6c9cf8901574cade2c4'
             '3a8bff78841a7573a41f74ac913b0c8d711b09356666319efc2959879be832ab64c3c9616b52f6ada7548883ae4200b0747794ebc053ce05b80aadb632230491'
             'ba13a28695902e69901abccc38087b9220e5bb605f1ffb0b13fb77c944ab2b020bfcad10e8138a73ba7643a885640b6e1f86096bb0bad230fe3a484ef42b8869'
             '4da055da633b40b6133d14fd13d1aa9d933b3ba4b19370bc0edbccc02d4e31a9291191f7dc3a2aca9225da8dabca6ed33f90ab757435bebd034b6fed28ac8092'
