@@ -2,19 +2,18 @@
 # Contributor: Sven-Hendrik Haase <svenstaro@gmail.com>
 # Contributor: hexchain <i@hexchain.org>
 pkgname=telegram-desktop9
-pkgver=3.4.0
+pkgver=3.4.3
 pkgrel=1
 pkgdesc='Official Telegram Desktop client (personal build)'
 arch=('x86_64')
 url="https://desktop.telegram.org/"
 license=('GPL3')
 depends=('ffmpeg' 'hicolor-icon-theme' 'lz4' 'minizip' 'openal' 'ttf-opensans'
-         'qt5-imageformats' 'qt5-svg' 'qt5-wayland' 'libdbusmenu-qt5' 'xxhash' 'kwayland' 'glibmm'
+         'qt6-imageformats' 'qt6-svg' 'qt6-wayland' 'qt6-5compat' 'xxhash' 'glibmm'
          'rnnoise' 'pipewire' 'libxtst' 'libxrandr' 'jemalloc' 'abseil-cpp')
 makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-gsl'
-             'extra-cmake-modules' 'gtk3' 'webkit2gtk' 'libtg_owt')
-optdepends=('gtk3: GTK environment integration'
-            'webkit2gtk: embedded browser features'
+             'extra-cmake-modules' 'wayland-protocols' 'plasma-wayland-protocols' 'libtg_owt')
+optdepends=('webkit2gtk: embedded browser features'
             'xdg-desktop-portal: desktop integration')
 provides=('telegram-desktop')
 conflicts=('telegram-desktop')
@@ -29,7 +28,7 @@ source=("https://github.com/telegramdesktop/tdesktop/releases/download/v${pkgver
         "use_xdg-open.patch"
         "fix_thread_context_menu.patch"
         "mediaviewer_nofullscreen.patch")
-sha512sums=('3ad3beb8a63bae98eb85127fdc1cce55baba0f9b0475904e54d4dc3a7679fbbb93e737b98c22c0737ed16204abff0eedd770be0f522de6c9cf8901574cade2c4'
+sha512sums=('6b27eb14570b55fb14c77f1d557591985a4791712897c2e144196c54c2a98b10c7ece9dac7d039a6bb56f39e3062e4fbfbb60f6822e52b76f927bbf419d88a6b'
             '3a8bff78841a7573a41f74ac913b0c8d711b09356666319efc2959879be832ab64c3c9616b52f6ada7548883ae4200b0747794ebc053ce05b80aadb632230491'
             'ba13a28695902e69901abccc38087b9220e5bb605f1ffb0b13fb77c944ab2b020bfcad10e8138a73ba7643a885640b6e1f86096bb0bad230fe3a484ef42b8869'
             '4da055da633b40b6133d14fd13d1aa9d933b3ba4b19370bc0edbccc02d4e31a9291191f7dc3a2aca9225da8dabca6ed33f90ab757435bebd034b6fed28ac8092'
@@ -56,19 +55,18 @@ prepare() {
 build() {
     cd tdesktop-$pkgver-full
 
+    export CXXFLAGS+=" -Wp,-U_GLIBCXX_ASSERTIONS"
     # Turns out we're allowed to use the official API key that telegram uses for their snap builds:
     # https://github.com/telegramdesktop/tdesktop/blob/8fab9167beb2407c1153930ed03a4badd0c2b59f/snap/snapcraft.yaml#L87-L88
     # Thanks @primeos!
     cmake \
         -B build \
         -G Ninja \
-        -DDESKTOP_APP_QT6=off \
         -DCMAKE_INSTALL_PREFIX="/usr" \
         -DCMAKE_BUILD_TYPE=Release \
         -DTDESKTOP_API_ID=611335 \
         -DTDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c \
         -DDESKTOP_APP_DISABLE_SPELLCHECK=ON
-    # Use Qt5 for the time being until kwayland has an easier way to work with Qt6.
     ninja -C build
 }
 
