@@ -2,7 +2,7 @@
 # Contributor: Sven-Hendrik Haase <svenstaro@gmail.com>
 # Contributor: hexchain <i@hexchain.org>
 pkgname=telegram-desktop9
-pkgver=3.4.3
+pkgver=3.4.8
 pkgrel=1
 pkgdesc='Official Telegram Desktop client (personal build)'
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('GPL3')
 depends=('ffmpeg' 'hicolor-icon-theme' 'lz4' 'minizip' 'openal' 'ttf-opensans'
          'qt6-imageformats' 'qt6-svg' 'qt6-wayland' 'qt6-5compat' 'xxhash' 'glibmm'
          'rnnoise' 'pipewire' 'libxtst' 'libxrandr' 'jemalloc' 'abseil-cpp')
-makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-gsl'
+makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-gsl' 'meson'
              'extra-cmake-modules' 'wayland-protocols' 'plasma-wayland-protocols' 'libtg_owt')
 optdepends=('webkit2gtk: embedded browser features'
             'xdg-desktop-portal: desktop integration')
@@ -28,7 +28,7 @@ source=("https://github.com/telegramdesktop/tdesktop/releases/download/v${pkgver
         "use_xdg-open.patch"
         "fix_thread_context_menu.patch"
         "mediaviewer_nofullscreen.patch")
-sha512sums=('6b27eb14570b55fb14c77f1d557591985a4791712897c2e144196c54c2a98b10c7ece9dac7d039a6bb56f39e3062e4fbfbb60f6822e52b76f927bbf419d88a6b'
+sha512sums=('cdeb5a83a375a494d805bf4198beee1c4bfc94bd9626535721a0cf04a590c70bfdb20e76baaa2a4c8c6db54c5813f22ce2a8c6291786b6b6db3dcde10b266fe1'
             '3a8bff78841a7573a41f74ac913b0c8d711b09356666319efc2959879be832ab64c3c9616b52f6ada7548883ae4200b0747794ebc053ce05b80aadb632230491'
             'ba13a28695902e69901abccc38087b9220e5bb605f1ffb0b13fb77c944ab2b020bfcad10e8138a73ba7643a885640b6e1f86096bb0bad230fe3a484ef42b8869'
             '4da055da633b40b6133d14fd13d1aa9d933b3ba4b19370bc0edbccc02d4e31a9291191f7dc3a2aca9225da8dabca6ed33f90ab757435bebd034b6fed28ac8092'
@@ -72,5 +72,8 @@ build() {
 
 package() {
     cd tdesktop-$pkgver-full
-    DESTDIR=$pkgdir ninja -C build install
+    DESTDIR="$pkgdir" ninja -C build install
+    # They botched the release and put a lot of stuff here.
+    rm -rf "$pkgdir/build"
+    rm -rf "$pkgdir/home"
 }
