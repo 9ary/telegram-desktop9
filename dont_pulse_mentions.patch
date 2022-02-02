@@ -2,22 +2,14 @@ Description: disables visual distractions from incoming mentions
 Credits: novie
 
 diff --git a/Telegram/SourceFiles/history/history_inner_widget.cpp b/Telegram/SourceFiles/history/history_inner_widget.cpp
-index 0d1cf828a..e08a08060 100644
+index fa083c223..bb55405a2 100644
 --- a/Telegram/SourceFiles/history/history_inner_widget.cpp
 +++ b/Telegram/SourceFiles/history/history_inner_widget.cpp
-@@ -690,7 +690,6 @@ void HistoryInner::paintEvent(QPaintEvent *e) {
- 					}
- 					if (item->isUnreadMention() && !item->isUnreadMedia()) {
- 						readMentions.insert(item);
--						_widget->enqueueMessageHighlight(view);
- 					}
- 				}
- 
-@@ -754,7 +753,6 @@ void HistoryInner::paintEvent(QPaintEvent *e) {
- 						}
- 						if (item->isUnreadMention() && !item->isUnreadMedia()) {
- 							readMentions.insert(item);
--							_widget->enqueueMessageHighlight(view);
- 						}
- 					}
- 				}
+@@ -947,7 +947,6 @@ void HistoryInner::paintEvent(QPaintEvent *e) {
+ 			} else if (item->isUnreadMention()
+ 				&& !item->isUnreadMedia()) {
+ 				readContents.insert(item);
+-				_widget->enqueueMessageHighlight(view);
+ 			}
+ 		}
+ 		session().data().reactions().poll(item, now);
